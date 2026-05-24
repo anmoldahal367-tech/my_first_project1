@@ -2,9 +2,13 @@ const express = require("express");
 
 const app = express();
 
-app.get("/api/message", (req, res) => {
+app.use(express.json());
+
+app.post("/api/user", (req, res) => {
+  const { name } = req.body;
+
   res.json({
-    message: "Hello from backend server 🚀"
+    message: `Hello ${name}, data received successfully!`,
   });
 });
 
