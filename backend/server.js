@@ -1,17 +1,23 @@
-const express = require("express");
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
-app.post("/api/user", (req, res) => {
-  const { name } = req.body;
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("MongoDB Connected"))
+.catch((err) => console.log(err));
 
-  res.json({
-    message: `Hello ${name}, data received successfully!`,
-  });
+app.get("/", (req, res) => {
+  res.send("Backend running successfully");
 });
 
-app.listen(5000, () => {
-  console.log("Server started on port 5000");
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on port ${process.env.PORT}`);
 });
