@@ -1,3 +1,4 @@
+import User from "./models/User.js";
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -20,4 +21,17 @@ app.get("/", (req, res) => {
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
+});
+app.post("/api/users", async (req, res) => {
+  try {
+    const newUser = new User({
+      name: req.body.name,
+    });
+
+    await newUser.save();
+
+    res.json({ message: "User saved successfully" });
+  } catch (error) {
+    console.log(error);
+  }
 });
